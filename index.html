@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Concentrated Animal Feed Operations</title>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+        <script type="text/javascript" src="data.js"></script>
+
+        <link rel="icon" href="toxic.png">
+
+        <style type="text/css">
+
+        html, body { margin: 0; padding: 0; height: 100%; }
+        #map { min-height: 100%; }
+
+
+
+                    </style>
+    </head>
+
+    <body>
+
+        <div id="map"></div>
+
+        <script type="text/javascript">
+
+          var map = L.map('map', {
+              center: [40.32,-88.99],
+              zoom: 7
+          });
+
+          var imagery = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
+            maxZoom: 17,
+            minZoom: 5,
+            id: 'mapbox.satellite',
+            accessToken:'pk.eyJ1IjoiYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWgiLCJhIjoiY2tlZDFvbDUxMGNjdDJ0cDJ0anN2ZHlsaiJ9.DRtyDcaqqSXFFXcGGckQlw'
+    }).addTo(map);
+
+
+          var canvas = L.tileLayer('https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=1cf6032efd614784aa849730cf762f28', {
+            attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            apikey: '1cf6032efd614784aa849730cf762f28',
+             });
+
+    L.geoJson(data).addTo(map);
+
+    var basemaps = {
+    "Canvas": canvas,
+    "Satellite Imagery": imagery
+};
+
+
+L.control.layers(basemaps).addTo(map);
+
+
+          var cowIcon = L.icon({
+                        iconUrl: 'cow.png', // url that links to the icon image file
+                        iconSize:     [38, 38], // size of the icon image in pixels
+                        iconAnchor:   [19, 19], // the top left corner of the icon will be aligned so that this point is at the marker's geographical location
+                        popupAnchor:  [0, -10] // point from which the popup should open, relative to the iconAnchor
+
+                          });
+
+            var pigIcon = L.icon({
+                                      iconUrl: 'pig.png', // url that links to the icon image file
+                                      iconSize:     [38, 38], // size of the icon image in pixels
+                                      iconAnchor:   [19, 19], // the top left corner of the icon will be aligned so that this point is at the marker's geographical location
+                                      popupAnchor:  [0, -10] // point from which the popup should open, relative to the iconAnchor
+                    });
+
+                    var helpIcon = L.icon({
+                                              iconUrl: 'help.png', // url that links to the icon image file
+                                              iconSize:     [38, 38], // size of the icon image in pixels
+                                              iconAnchor:   [19, 19], // the top left corner of the icon will be aligned so that this point is at the marker's geographical location
+                                              popupAnchor:  [0, -10] // point from which the popup should open, relative to the iconAnchor
+                            });
+
+
+            var marker1 = L.marker([38.280521,-89.733517], {icon: pigIcon}).addTo(map); //11405 Range LM Marissa,IL 62257 KHMM Range Farm Pig farm 9400 4 million gallons 2013
+            var marker2 = L.marker([38.704676,-89.535167], {icon: pigIcon}).addTo(map); // 19503 Ellwood RD Breese IL 62230  Triple V farms 4000 pigs/dairy? 3800 tons 2.8 million gallons 2012
+            var marker3 = L.marker([38.44770,-89.58527], {icon: pigIcon}).addTo(map); //15542 Bottom Prarie RD Okawville,IL 62271 Elm Farms Inc. 14k animals Pig farm 4.4 million 2013
+            var marker4 = L.marker([38.68316,-89.54310], {icon: cowIcon}).addTo(map); //8606 Main St Breese,IL 62230 Buehne Farms Inc 300 cows 2500 tons 2.7 million gallons 2014
+            var marker5 = L.marker([42.11672,-89.83611], {icon: cowIcon}).addTo(map); //12490 IL 73 Lanark,IL 61046 Northwest Illini Feedlot 5000 cows 67k tons of watse / 4 million gallons of waste per year 2013
+            var marker6 = L.marker([42.34134,-89.91252], {icon: cowIcon}).addTo(map); //2745 N Sunnyside Rd 61044 Kent,IL Rancho Cantera 1400 dairy cows 16 million gallons 2010
+            var marker7 = L.marker([39.34134,-89.91252], {icon: helpIcon}).addTo(map);
+            var marker8 = L.marker([39.34134,-89.01252], {icon: helpIcon}).addTo(map);
+
+
+            L.circle([42.34134,-89.91252], 3200).addTo(map); //16 million
+            L.circle([42.11672,-89.83611], 800).addTo(map); // 4 million
+            L.circle([38.68316,-89.54310], 540).addTo(map); // 2.7 million
+            L.circle([38.44770,-89.58527], 880).addTo(map); //4.4 million
+            L.circle([38.704676,-89.535167], 560).addTo(map); //2.8 million
+            L.circle([38.280521,-89.733517], 800).addTo(map); // 4 million
+
+         marker1.bindPopup('<p style="color:black; font-weight:bold"> Pig Farm with an estimated waste of 4 million gallons per year</p>');
+         marker2.bindPopup('<p style="color:black; font-weight:bold"> Pig and Dairy Farm with an estimated waste of 2.8 million gallons of waste per year</p>');
+         marker3.bindPopup('<p style="color:black; font-weight:bold"> Pig Farm with an estimated 4.4 million gallons of waste per year</p>');
+         marker4.bindPopup('<p style="color:black; font-weight:bold"> Cow Farm with an estimated 2.7 million gallons of waste per year</p>');
+         marker5.bindPopup('<p style="color:black; font-weight:bold"> Cow Farm with an estimated 4 million gallons of waste per year</p>');
+         marker6.bindPopup('<p style="color:black; font-weight:bold"> Dairy Farm with an estimated 16 million gallons of waste per year</p>');
+         marker7.bindPopup('<p style="color:black; font-weight:bold"> Unfortunately, I was not able to get the theme to display properly with my map in time for class. So, I just wanted to try and explain a few things. CAFOs are concentrated animal feeding operations. They hold thousands of animals and with that many animals comes waste. So, how do they hold all that waste? They create lagoons and pools to hold all of it. Zooming in on the areas you will notice similiar building patterns and large pools or lakes on the properties.</p>');
+        marker8.bindPopup('<p style="color:black; font-weight:bold"> The blue highlighted bodies of water are downloaded from the USGS showing major bodies of water nearby. If you switch basemaps you can see that there are smaller rivers or streams a lot closer. The purpose of mapping this is to show how much waste is associated with a diet so heavily focused on meat. Of course another thing to mention is that this is only a small sample of farms in Illinois.</p>');
+
+        </script>
+   </body>
+</html>
